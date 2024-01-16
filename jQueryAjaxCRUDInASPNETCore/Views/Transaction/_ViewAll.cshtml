@@ -1,0 +1,52 @@
+﻿@model IEnumerable<jQueryAjaxCRUDInASPNETCore.Models.TransactionModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BeneficiaryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th><a onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", null, Context.Request.Scheme)','New Transaction')" class="btn btn-success text-white">New Transaction</a></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeneficiaryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    <div>
+                        <a onclick="showInPopup('@Url.Action("AddOrEdit", "Transaction", new { id = item.TransactionId }, Context.Request.Scheme)','Update Transaction')" class="btn btn-info text-white">Edit</a>
+                        @*<a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>*@
+                        <form asp-action="Delete" asp-route-id="@item.TransactionId" onsubmit="return jQueryAjaxDelete(this);" class="d-inline">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </form>
+
+                        @*<a asp-action="Edit" asp-route-id="@item.TransactionId">Edit</a> |*@
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
